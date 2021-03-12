@@ -10,8 +10,10 @@ class TreeNode(object):
     traversal.append(root.val)
     
     if root.left:
-        if root.right:
-          traversal = self.print_tree(root.right, traversal)
+      traversal = self.print_tree(root.left, traversal)
+    
+    if root.right:
+      traversal = self.print_tree(root.right, traversal)
 
     return traversal 
 
@@ -27,8 +29,12 @@ class Solution(object):
 
     if root2 is None:
       return root1
+    
+    if root1.val == None and root2.val == None:
+      root1.val = None
+    else:
+      root1.val += root2.val
 
-    root1.val += root2.val
     root1.left = self.mergeTrees(root1.left, root2.left)
     root1.right = self.mergeTrees(root1.right, root2.right)
 
@@ -51,5 +57,4 @@ root2.right.right = TreeNode(7)
 
 merged = obj.mergeTrees(root1, root2)
 
-print(type(merged.right.left.val))
 print(merged.print_tree(merged))
