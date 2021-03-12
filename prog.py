@@ -10,6 +10,7 @@ class TreeNode(object):
     for i in range(1, h+1):
       self.printLevel(root, i, traversal)
     
+<<<<<<< HEAD
     return traversal
 
   def printLevel(self, root, level, traversal):
@@ -27,6 +28,15 @@ class TreeNode(object):
     else:
       lheight = self.height(root.left)
       rheight = self.height(root.right)
+=======
+    traversal.append(root.val)
+    
+    if root.left:
+      traversal = self.print_tree(root.left, traversal)
+    
+    if root.right:
+      traversal = self.print_tree(root.right, traversal)
+>>>>>>> refs/remotes/origin/main
 
       if lheight > rheight:
         return lheight+1
@@ -40,6 +50,7 @@ class Solution(object):
     :type root2: TreeNode
     :rtype: TreeNode
     """
+<<<<<<< HEAD
     if root1 and root2:
       root = TreeNode(root1.val + root2.val)
       root.left = self.mergeTrees(root1.left, root2.left)
@@ -47,6 +58,23 @@ class Solution(object):
       return root
     else:
       return root1 or root2
+=======
+    if root1 is None:
+      return root2
+
+    if root2 is None:
+      return root1
+    
+    if root1.val == None and root2.val == None:
+      root1.val = None
+    else:
+      root1.val += root2.val
+
+    root1.left = self.mergeTrees(root1.left, root2.left)
+    root1.right = self.mergeTrees(root1.right, root2.right)
+
+    return root1
+>>>>>>> refs/remotes/origin/main
 
 obj = Solution()
 
