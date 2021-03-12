@@ -6,14 +6,32 @@ class TreeNode(object):
     self.right = right
  
   def print_tree(self, root, traversal=[]):
+    h = self.height(root)
+    for i in range(1, h+1):
+      self.printLevel(root, i, traversal)
     
-    traversal.append(root.val)
-    
-    if root.left:
-        if root.right:
-          traversal = self.print_tree(root.right, traversal)
+    return traversal
 
-    return traversal 
+  def printLevel(self, root, level, traversal):
+    if root is None:
+      return
+    if level == 1:
+      traversal.append(root.val)
+    elif level > 1:
+      self.printLevel(root.left, level-1, traversal)
+      self.printLevel(root.right, level-1, traversal)
+
+  def height(self, root):
+    if root is None:
+      return 0
+    else:
+      lheight = self.height(root.left)
+      rheight = self.height(root.right)
+
+      if lheight > rheight:
+        return lheight+1
+      else:
+        return rheight+1
 
 class Solution(object):
   def mergeTrees(self, root1, root2):
@@ -22,17 +40,13 @@ class Solution(object):
     :type root2: TreeNode
     :rtype: TreeNode
     """
-    if root1 is None:
-      return root2
-
-    if root2 is None:
-      return root1
-
-    root1.val += root2.val
-    root1.left = self.mergeTrees(root1.left, root2.left)
-    root1.right = self.mergeTrees(root1.right, root2.right)
-
-    return root1
+    if root1 and root2:
+      root = TreeNode(root1.val + root2.val)
+      root.left = self.mergeTrees(root1.left, root2.left)
+      root.right = self.mergeTrees(root1.right, root2.right)
+      return root
+    else:
+      return root1 or root2
 
 obj = Solution()
 
@@ -51,5 +65,4 @@ root2.right.right = TreeNode(7)
 
 merged = obj.mergeTrees(root1, root2)
 
-print(type(merged.right.left.val))
 print(merged.print_tree(merged))
